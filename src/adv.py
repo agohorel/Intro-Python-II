@@ -5,21 +5,21 @@ from player import Player
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", ["stick", "rock"]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", ["lamp", "dagger"]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", ["rope", "chain"]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", ["rock"]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", ["goblet", "necklace"]),
 }
 
 
@@ -56,7 +56,9 @@ player = Player("alex", room['outside'])
 
 while True:
     print("Current Location: " + player.current_room.name)
-    print("Description: " + player.current_room.description)
+    print("\nDescription: " + player.current_room.description)
+    print("\nYou see the following items:")
+    print(*player.current_room.items, sep=", ")
     choice = input("\nWhich way do you want to go? ")
 
     if choice == "q":
