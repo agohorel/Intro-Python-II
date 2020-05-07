@@ -105,6 +105,12 @@ def item_interaction(choice):
                 if i.name == item:
                     player.pickup_item(i)
                     player.inventory[-1].on_take()
+                    if len(player.current_room.items) == 0:
+                        print("\nYour greed has angered The Ancient Ones. An unfathomable energy overtakes the room. Your mind recoils, the confusion immeasurable. In reality only a few moments pass, but you feel trapped inside eternity. Your body falls to the dirty floor a crumpled shadow of itself. You fade into the blackness...")
+                        time.sleep(7)
+                        print("\n\n\nYOU DIED")
+                        global done
+                        done = True
 
         elif action == "drop" or action == "toss" or action == "discard":
             for i in player.inventory:
