@@ -69,7 +69,7 @@ def help():
     print("\n### ITEM COMMANDS ###")
     print("take, grab, get [item name] - pick up an item")
     print("drop, toss, discard [item name] - drop an item\n")
-    time.sleep(5)
+    time.sleep(3)
 
 
 def navigation(choice):
@@ -129,6 +129,7 @@ def display_player_inventory():
         print(*player.inventory, sep="\n")
     else:
         print("\nYou have no items in your inventory")
+    time.sleep(5)
 
 def display_current_location():
     print("\n----------------------------------------------\n")
@@ -139,10 +140,11 @@ def display_current_location():
 while done != True:
     display_current_location()
     display_room_items()
-    display_player_inventory()
     choice = input("\nWhat will you do? ").split(" ")
 
-    if (len(choice) == 1):
+    if (len(choice) == 1 and choice[0] != "i" and choice[0] != "inventory"):
         navigation(choice[0])
+    elif (choice[0] == "i" or choice[0] == "inventory"):
+        display_player_inventory()
     else:
         item_interaction(choice)
