@@ -2,7 +2,7 @@ import sys
 import time
 from room import Room
 from player import Player
-from item import Item
+from item import Item, Treasure
 
 # controls main game loop
 done = False
@@ -25,7 +25,7 @@ to north. The smell of gold permeates the air.""", [Item("cannister", "a bent up
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", [Item("goblet", "a shimmering golden goblet"), Item("necklace", "a jewel-encrusted necklace w/ cryptic engravings")]),
+earlier adventurers. The only exit is to the south.""", [Treasure("goblet", "a shimmering golden goblet", 15000), Treasure("necklace", "a jewel-encrusted necklace w/ cryptic engravings", 5000)]),
 }
 
 
