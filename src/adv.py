@@ -69,6 +69,8 @@ def help():
     print("\n### ITEM COMMANDS ###")
     print("take, grab, get [item name] - pick up an item")
     print("drop, toss, discard [item name] - drop an item\n")
+    print("\n### GAME OPTIONS ###")
+    print("q, quit, exit - exit the game")
     time.sleep(3)
 
 
