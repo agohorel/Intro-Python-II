@@ -74,6 +74,16 @@ def help():
     time.sleep(3)
 
 
+def death():
+    print("\nYour greed has angered The Ancient Ones. An incomprehensible energy overtakes the room. Your mind recoils, the confusion immeasurable. In reality only a few moments pass, but you feel trapped inside eternity. Your body falls to the dirty floor a crumpled shadow of itself. You fade into the blackness...")
+    time.sleep(7)
+    print("\n\n\n\033[91m" + "YOU DIED") # set red color 
+    time.sleep(.75)
+    print("\u001b[0m" + "ouch.") # reset color
+    global done
+    done = True
+
+
 def navigation(choice):
     try:
         if choice == "q" or choice == "quit" or choice == "exit":
@@ -91,36 +101,38 @@ def navigation(choice):
             help()
         else:
             print(
-                "Invalid selection - valid inputs are 'n', 's,', 'e', 'w' directions or 'q' to quit")
+                "Invalid selection - enter 'help' to see list of valid commands")
+            time.sleep(2)
     except:
         print("\n**** Can't go further in this direction! Try another. ****\n")
+        time.sleep(2)
 
 
 def item_interaction(choice):
     action, item = choice
 
-    try:
-        if action == "take" or action == "grab" or action == "get":
-            for i in player.current_room.items:
-                if i.name == item:
-                    player.pickup_item(i)
-                    player.inventory[-1].on_take()
-                    if len(player.current_room.items) == 0:
-                        print("\nYour greed has angered The Ancient Ones. An unfathomable energy overtakes the room. Your mind recoils, the confusion immeasurable. In reality only a few moments pass, but you feel trapped inside eternity. Your body falls to the dirty floor a crumpled shadow of itself. You fade into the blackness...")
-                        time.sleep(7)
-                        print("\n\n\nYOU DIED")
-                        global done
-                        done = True
+    if action == "take" or action == "grab" or action == "get":
+        for idx, i in enumerate(player.current_room.items):
+            if i.name == item:
+                player.pickup_item(i)
+                player.inventory[-1].on_take()
+                if player.current_room.name == "Treasure Chamber" and len(player.current_room.items) == 0:
+                    death()
+            else:
+                if (idx == 0):  # prevent duplicate prints
+                    warn_invalid_item()
 
-        elif action == "drop" or action == "toss" or action == "discard":
-            for i in player.inventory:
-                if i.name == item:
-                    player.drop_item(i)
-                    player.inventory[-1].on_drop()
-        else:
-            print("\nInvalid command - enter 'help' for a list of commands")
-    except:
-        print("\nItem not available - refer to the list of items in the current room.")
+    elif action == "drop" or action == "toss" or action == "discard":
+        for idx, i in enumerate(player.inventory):
+            if i.name == item:
+                player.inventory[-1].on_drop()
+                player.drop_item(i)
+            else:
+                if (idx == 0):
+                    warn_invalid_item()
+    else:
+        print("\nInvalid command - enter 'help' for a list of commands")
+        time.sleep(2)
 
 
 def display_room_items():
@@ -137,7 +149,8 @@ def display_player_inventory():
         print(*player.inventory, sep="\n")
     else:
         print("\nYou have no items in your inventory")
-    time.sleep(5)
+    time.sleep(2)
+
 
 def display_current_location():
     print("\n----------------------------------------------\n")
@@ -145,6 +158,12 @@ def display_current_location():
     print("\nDescription: " + player.current_room.description)
 
 
+def warn_invalid_item():
+    print("\nItem not available - you can only pick up items in the room or drop ones in your inventory.")
+    time.sleep(2)
+
+
+# main game loop
 while done != True:
     display_current_location()
     display_room_items()
